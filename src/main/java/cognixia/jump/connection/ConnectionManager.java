@@ -63,21 +63,21 @@ public class ConnectionManager {
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		Connection conn = ConnectionManager.getConnection();
-		Connection conn2 = ConnectionManager.getConnection();
-		
-		try {
-			conn.close();
-			System.out.println("Connection closed");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
+//	public static void main(String[] args) {
+//		
+//		Connection conn = ConnectionManager.getConnection();
+//		Connection conn2 = ConnectionManager.getConnection();
+//		
+//		try {
+//			conn.close();
+//			System.out.println("Connection closed");
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		
+//	}
 	
 
 }

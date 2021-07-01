@@ -2,6 +2,7 @@ package cognixia.jump.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cognixia.jump.connection.ConnectionManager;
+import cognixia.jump.dao.BookDAO;
 import cognixia.jump.dao.PatronDao;
+import cognixia.jump.model.Book;
 import cognixia.jump.model.Patron;
 
 
@@ -24,6 +27,7 @@ public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private PatronDao patronDAO;
+	private BookDAO bookDao;
 	
 	private Patron userLogedin;
     /**
@@ -36,6 +40,7 @@ public class BookServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
     	patronDAO= new PatronDao();
+    	bookDao = new BookDAO();
     }
     
 	/**
@@ -93,6 +98,9 @@ public class BookServlet extends HttpServlet {
 		
 		if(test != null) {
 			
+			List<Book> getAllBooks = bookDao.getAllBooks();
+			
+			request.setAttribute("allBooks", getAllBooks);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
 		}else {
@@ -105,7 +113,22 @@ public class BookServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 			}
 		
+		
+		
+		
 		//response.sendRedirect(request.getContextPath());
+	}
+	
+	private void getAllBooks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		List<Book> allbooks = bookDao.getAllBooks();
+		
+		request.setAttribute("allBooks", allbooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
+		dispatcher.forward(request, response);
+		
+		
+		
 	}
 	
 }

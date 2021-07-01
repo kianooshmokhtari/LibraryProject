@@ -58,6 +58,14 @@ public class Book {
 	public void setAdded_To_Library(Date added_To_Library) {
 		this.added_To_Library = added_To_Library;
 	}
+
+	@Override
+	public String toString() {
+		return "Book [ISBN=" + ISBN + ", title=" + title + ", description=" + description + ", isRented=" + isRented
+				+ ", added_To_Library=" + added_To_Library + "]";
+	}
+	
+	
 	
 	
 	

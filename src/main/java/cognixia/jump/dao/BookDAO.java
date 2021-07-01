@@ -35,6 +35,7 @@ public class BookDAO {
 				Book book = new Book(isbn, title, description, isRented, null);
 				
 				allBooks.add(book);
+				System.out.println(book.toString());
 				
 				
 				

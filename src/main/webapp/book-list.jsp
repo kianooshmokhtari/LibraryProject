@@ -21,10 +21,10 @@
 		
 		<tbody>
 		
-		<%ArrayList<Book> bk = 
+		<%-- <%ArrayList<Book> bk = 
             (ArrayList<Book>)request.getAttribute("allBooks");
         for(Book b:bk){%>
-        <%-- Arranging data in tabular form --%>
+        Arranging data in tabular form
 			<tr>
 				<td><%=b.getISBN()%></td>
 				<td><%=b.getTitle()%></td>
@@ -33,15 +33,15 @@
 					<%}%>
 				</td>
 			</tr>
-			<%}%>
+			<%}%> --%>
 			
-			<c:forEach var="product" items="${allBooks}">
+			<c:forEach var="book" items="${allBooks}">
 				<tr>
 					<td>
-						<c:out value="${ ISBN }" />
+						<c:out value="${ book.ISBN }" />
 					</td>
 					<td>
-						<c:out value="${ title }" />
+						<c:out value="${ book.title }" />
 					</td>
 					<td>
 						<c:out value="${ description }" />
