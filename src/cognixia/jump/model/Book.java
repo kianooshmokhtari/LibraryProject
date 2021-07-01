@@ -1,4 +1,4 @@
-package com.cognixia.jump.library.model;
+package cognixia.jump.model;
 
 import java.util.Date;
 

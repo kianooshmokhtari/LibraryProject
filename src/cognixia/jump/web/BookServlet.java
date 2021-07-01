@@ -1,4 +1,4 @@
-package com.cognixia.jump.library.web;
+package cognixia.jump.web;
 
 import javax.servlet.http.HttpServlet;
 
