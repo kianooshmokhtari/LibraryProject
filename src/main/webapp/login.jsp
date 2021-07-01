@@ -32,11 +32,11 @@
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 	
-	<%String error = (String) request.getAttribute("LoginError"); %>
+	<%-- <%String error = (String) request.getAttribute("LoginError"); %>
         <%if(error != null) { %>
         	<p><%= error %></p>
         	
-		<% }%>
+		<% }%> --%>
 
 	<!--  Email:<input type="text" name="email" /><br />-->
 	<!--  br /> Password:<input type="password" name="password" /><br />-->

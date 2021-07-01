@@ -96,7 +96,14 @@ public class BookServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
 		}else {
-			response.sendRedirect(request.getContextPath());	}
+			
+			String error = "Wrong username or password entered";
+			
+			request.setAttribute("LoginError", error);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+			}
 		
 		//response.sendRedirect(request.getContextPath());
 	}
