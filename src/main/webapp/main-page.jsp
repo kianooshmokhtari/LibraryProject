@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Main Page</title>
-</head>
-<body>
+	pageEncoding="UTF-8"%>
 
-	<h1>Main Page</h1>
-</body>
-</html>
+<%@ include file="header.jsp"%>
+
+<div class="container">
+
+	<title>Main Page</title>
+
+	<%@include file="book-list.jsp"%>
+
+</div>
