@@ -19,7 +19,7 @@
 	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 	crossorigin="anonymous"></script>
 
-<form action="login" method="post">
+<form action="<%=request.getContextPath()%>/login" method="post">
 
 	<div class="mb-3">
 		<label for="inputUsername" class="form-label">Username </label> <input

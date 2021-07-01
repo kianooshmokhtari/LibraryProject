@@ -12,23 +12,27 @@ public class ConnectionManager {
 
 	private static Connection connection; // null
 	
+	private static final String URL = "jdbc:mysql://localhost:3306/library?serverTimezone=EST5EDT";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "Root@321";
+	
 	
 	private static void makeConnection() {
 		
 		try {
 			
 			// access the info in our properties file
-			Properties props = new Properties();
-			
-			props.load( new FileInputStream("resources/config.properties") );
-			String url = props.getProperty("url");
-			String username = props.getProperty("username");
-			String password = props.getProperty("password");
+//			Properties props = new Properties();
+//			
+//			props.load( new FileInputStream("resources/config.properties") );
+//			String url = props.getProperty("url");
+//			String username = props.getProperty("username");
+//			String password = props.getProperty("password");
 			
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			connection = DriverManager.getConnection(url, username, password);
+			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			System.out.println("Connected.");
 
 		} catch (SQLException e) {
@@ -36,13 +40,16 @@ public class ConnectionManager {
 		} catch (ClassNotFoundException e) {
 
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
 		}
+		
+		
+//		} catch (FileNotFoundException e) {
+//			
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			
+//			e.printStackTrace();
+//		}
 		
 	}
 	

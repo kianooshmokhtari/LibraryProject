@@ -24,6 +24,8 @@ public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private PatronDao patronDAO;
+	
+	private Patron userLogedin;
     /**
      * Default constructor. 
      */
@@ -90,13 +92,13 @@ public class BookServlet extends HttpServlet {
 		Patron test = patronDAO.getPatronByUserName(username, password);
 		
 		if(test != null) {
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
 		}else {
-			response.sendRedirect("/");
-		}
+			response.sendRedirect(request.getContextPath());	}
 		
-		response.sendRedirect(request.getContextPath());
+		//response.sendRedirect(request.getContextPath());
 	}
 	
 }
