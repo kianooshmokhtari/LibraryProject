@@ -15,7 +15,7 @@ import cognixia.jump.model.Book;
 public class BookDAO {
 	private static final Connection connection = ConnectionManager.getConnection();
 	
-	private static final String SELECT_ALL_BOOKS = "Select * from Book";
+	private static final String SELECT_ALL_BOOKS = "Select * from book";
 	private static final String INSERT_RENT_BOOK = "insert into book_checkout(patron_id, isbn, checkedout, due_date, returned) values(?, ?, ?, ?, ?)";
 	private static final String UPDATE_RENT_BOOK = "UPDATE book Set rented = ? where isbn = ?";
 	private static final String UPDATE_RENTED_BOOK = "UPDATE book_checkout Set returned = ? where isbn = ?";
