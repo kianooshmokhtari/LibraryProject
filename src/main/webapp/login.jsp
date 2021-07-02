@@ -35,11 +35,9 @@
 	<%-- <%String error = (String) request.getAttribute("LoginError"); %>
         <%if(error != null) { %>
         	<p><%= error %></p>
-        	
 		<% }%> --%>
 
-	<!--  Email:<input type="text" name="email" /><br />-->
-	<!--  br /> Password:<input type="password" name="password" /><br />-->
-	<!--  <br /> <input type="submit" value="login" />" -->
-	<!--  <input type="submit" value="login" /> -->
+<form action="<%=request.getContextPath()%>/create-account" method="post">
+<br />
+	<button type="submit" class="btn btn-secondary">Create an Account</button>
 </form>
