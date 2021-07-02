@@ -37,6 +37,7 @@
         	<p><%= error %></p>
 		<% }%> --%>
 		</form>
+		<br />
 
 <form action="<%=request.getContextPath()%>/create-account-page" method="post">
 	<input type="submit" class="btn btn-secondary" value= "Create Account" />
