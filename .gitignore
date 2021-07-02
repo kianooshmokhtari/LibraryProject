@@ -48,3 +48,6 @@ dependency-reduced-pom.xml
 
 # change
 config.properties
+
+# adding to reduce errors
+pom.xml
