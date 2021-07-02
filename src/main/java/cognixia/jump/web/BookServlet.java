@@ -56,9 +56,9 @@ public class BookServlet extends HttpServlet {
 			getUserName(request, response);
 			break;
 			
-//		case "/list":
-//			listAllProducts(request, response);
-//			break;
+		case "/create-account":
+			createAccount(request,response);
+			break;
 //		case "/new":
 //			goToProductForm(request, response);
 //			break;
@@ -88,6 +88,13 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void createAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 	
 //
