@@ -68,12 +68,12 @@ public class BookDAO {
 		
 		try(PreparedStatement pstmt = connection.prepareStatement(INSERT_RENT_BOOK);){
 			
-			pstmt.setString(1, id);
+			pstmt.setInt(1, Integer.valueOf(id));
 			pstmt.setString(2, isbn);
 			
 			
 			
-			Date date = getCurrentDateTime();
+			//Date date = getCurrentDateTime();
 			
 			Date currentDate = new Date();
 			Calendar c = Calendar.getInstance();
@@ -81,11 +81,14 @@ public class BookDAO {
 			c.add(Calendar.DATE, 10);
 			Date returnDate = c.getTime();
 			
+			java.util.Date date = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(returnDate.getTime());
+			
 			
 			
 			
 			pstmt.setDate(3, new java.sql.Date(System.currentTimeMillis()));
-			pstmt.setDate(4, (java.sql.Date) returnDate);
+			pstmt.setDate(4, sqlDate);
 			pstmt.setDate(5, null);
 			
 			

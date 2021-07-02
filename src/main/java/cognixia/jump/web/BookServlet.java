@@ -65,6 +65,11 @@ public class BookServlet extends HttpServlet {
 		case "/logout":
 			Logout(request,response);
 			break;
+		case "/rent":
+			rentBook(request,response);
+			break;
+			
+			
 			
 //			goToProductForm(request, response);
 //			break;
@@ -94,6 +99,38 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void rentBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		Cookie [] cookies = request.getCookies();
+		
+		String id = "";
+		
+		for(int i =0 ; i < cookies.length; i++) {
+			
+			if(cookies[i].getName().equals("id")) {
+				id = cookies[i].getValue();
+			}
+		}
+		
+		
+		String ISBN = request.getParameter("isbn");
+		
+		boolean rented = bookDao.rentABook(id, ISBN);
+		
+		if(rented) {
+			
+			List<Book> getAllBooks = bookDao.getAllBooks();
+			
+			request.setAttribute("allBooks", getAllBooks);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		
+		
 	}
 	
 	private void Logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
