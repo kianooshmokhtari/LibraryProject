@@ -18,7 +18,7 @@ public class BookDAO {
 	private static final String SELECT_ALL_BOOKS = "Select * from Book";
 	private static final String INSERT_RENT_BOOK = "insert into book_checkout(patron_id, isbn, checkedout, due_date, returned) values(?, ?, ?, ?, ?)";
 	private static final String UPDATE_RENT_BOOK = "UPDATE book Set rented = ? where isbn = ?";
-	
+	private static final String UPDATE_RENTED_BOOK = "UPDATE book_checkout Set returned = ? where isbn = ?";
 	
 	
 	
@@ -37,8 +37,6 @@ public class BookDAO {
 				String title = results.getString("title");
 				String description = results.getString("descr");
 				boolean isRented = results.getBoolean("rented");
-				
-				System.out.print(isRented);
 				
 				Book book = new Book(isbn, title, description, isRented, null);
 				
@@ -107,6 +105,18 @@ public class BookDAO {
 			
 			
 			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		} catch (SQLException e) {
 			
 			
@@ -124,8 +134,36 @@ public class BookDAO {
 	}
 	
 	
-	
-	
-	
+	public boolean updateABook(String id, String isbn) {
+		
+		
+		try(PreparedStatement pstmt = connection.prepareStatement(UPDATE_RENTED_BOOK);){
+
+			Date currentDate = new Date();
+			Calendar c = Calendar.getInstance();
+			c.setTime(currentDate);
+			c.add(Calendar.DATE, 10);
+			Date returnDate = c.getTime();
+			
+			pstmt.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+			pstmt.setString(2, isbn);
+			
+			if(pstmt.executeUpdate() < 1 )
+				return false;
+			
+			PreparedStatement pstmt2 = connection.prepareStatement(UPDATE_RENT_BOOK);
+			
+			pstmt2.setBoolean(1, false);
+			pstmt2.setString(2, isbn);
+			
+			if(pstmt2.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}	
 
 }
