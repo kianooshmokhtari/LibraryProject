@@ -14,6 +14,7 @@ public class BookDAO {
 	private static final Connection connection = ConnectionManager.getConnection();
 	
 	private static final String SELECT_ALL_BOOKS = "Select * from Book";
+	//private static final String INSERT_RENT_BOOK = "I"
 	
 	
 	

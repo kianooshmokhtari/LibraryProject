@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -101,6 +102,13 @@ public class BookServlet extends HttpServlet {
 			List<Book> getAllBooks = bookDao.getAllBooks();
 			
 			request.setAttribute("allBooks", getAllBooks);
+			
+			Cookie c1 = new Cookie("id", test.getUserName());
+			
+			
+			response.addCookie(c1);
+			
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
 		}else {
@@ -123,6 +131,12 @@ public class BookServlet extends HttpServlet {
 		
 		List<Book> allbooks = bookDao.getAllBooks();
 		
+		Cookie [] cookies = request.getCookies();
+		
+		String id = cookies[0].getValue();
+		
+		
+		request.setAttribute("id", id);
 		request.setAttribute("allBooks", allbooks);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
 		dispatcher.forward(request, response);
