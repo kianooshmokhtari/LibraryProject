@@ -12,11 +12,9 @@
 		
 		<thead>
 			<tr>
-				<th>#</th>
 				<th>ISBN</th>
 				<th>Title</th>
 				<th>Description</th>
-				<th>Rented</th>
 				<th>Available</th>
 			</tr>
 		</thead>
@@ -46,21 +44,14 @@
 						<c:out value="${ book.title }" />
 					</td>
 					<td>
-						<c:out value="${ description }" />
+						<c:out value="${ book.description }" />
 					</td>
 					<td>
-						<c:out value="${ isRented }" />
-					</td>
-					<td>
-						<c:out value="${ add_To_Library }" />
-					</td>
-					<td>
-						<a href="edit?id=<c:out value='${ ISBN }' />">
-							<button class="btn btn-primary">Edit</button>
-						</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="delete?id=<c:out value='${ title }' />">
-							<button class="btn btn-danger">Delete</button>
+					<c:if test="${ not book.isRented() }">
+						<a href="rent?isbn=<c:out value='${ book.ISBN }' />">
+							<button class="btn btn-primary">Rent</button>
 						</a>
+					</c:if>
 					</td>
 				</tr>
 			</c:forEach>

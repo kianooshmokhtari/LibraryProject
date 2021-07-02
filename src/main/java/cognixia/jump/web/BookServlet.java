@@ -56,10 +56,16 @@ public class BookServlet extends HttpServlet {
 			getUserName(request, response);
 			break;
 			
-		case "/create-account":
+		case "/create-account-page":
 			createAccount(request,response);
 			break;
-//		case "/new":
+		case "/create-account-db":
+			createAccountDB(request,response);
+			break;
+		case "/logout":
+			Logout(request,response);
+			break;
+			
 //			goToProductForm(request, response);
 //			break;
 //		case "/insert":
@@ -90,6 +96,47 @@ public class BookServlet extends HttpServlet {
 		}
 	}
 	
+	private void Logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		Cookie c = new Cookie("id" , "");
+		c.setMaxAge(0);
+		response.addCookie(c);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+	
+	
+	private void createAccountDB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String userName = request.getParameter("username");
+		String password = request.getParameter("pass");
+		
+		
+		boolean created = patronDAO.createdUserName(firstName, lastName, userName, password);
+		
+		if(created) {
+			
+			String error = "Account Sucessfully Created!";
+			
+			request.setAttribute("LoginError", error);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+			
+		}else {
+			
+			String error = "pick a different username. Username existed.";
+			request.setAttribute("AccountError", error);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		
+	}
+	
 	private void createAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
@@ -110,7 +157,9 @@ public class BookServlet extends HttpServlet {
 			
 			request.setAttribute("allBooks", getAllBooks);
 			
-			Cookie c1 = new Cookie("id", test.getUserName());
+			Cookie c1 = new Cookie("id", test.getId());
+			
+			c1.setMaxAge(30 * 60);
 			
 			
 			response.addCookie(c1);

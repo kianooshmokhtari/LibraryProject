@@ -38,6 +38,6 @@
 		<% }%> --%>
 		</form>
 
-<form action="<%=request.getContextPath()%>/create-account" method="post">
+<form action="<%=request.getContextPath()%>/create-account-page" method="post">
 	<input type="submit" class="btn btn-secondary" value= "Create Account" />
 </form>

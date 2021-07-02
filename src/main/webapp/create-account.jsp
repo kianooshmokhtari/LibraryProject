@@ -19,7 +19,7 @@
 	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 	crossorigin="anonymous"></script>
 
-<form action="<%=request.getContextPath()%>/create-account" method="post">
+<form action="<%=request.getContextPath()%>/create-account-db" method="post">
 
 	<div class="mb-3">
 		<label for="firstName" class="form-label">First Name</label>
@@ -40,3 +40,9 @@
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<%String error = (String) request.getAttribute("AccountError"); %>
+        <%if(error != null) { %>
+        	<p><%= error %></p>
+        	
+		<% }%>

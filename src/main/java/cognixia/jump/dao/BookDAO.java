@@ -38,6 +38,8 @@ public class BookDAO {
 				String description = results.getString("descr");
 				boolean isRented = results.getBoolean("rented");
 				
+				System.out.print(isRented);
+				
 				Book book = new Book(isbn, title, description, isRented, null);
 				
 				allBooks.add(book);
@@ -105,18 +107,6 @@ public class BookDAO {
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		} catch (SQLException e) {
 			
 			
@@ -132,6 +122,8 @@ public class BookDAO {
 		Date today = new Date();
 		return new Date(today.getTime());
 	}
+	
+	
 	
 	
 	
