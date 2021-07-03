@@ -9,6 +9,11 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
 	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 	crossorigin="anonymous"></script>
+<style>
+footer {
+	background-color: white;
+}
+</style>
 	
 <footer>Copyright @Cognixia | Made with &#x2764 by Raymond and Kianoosh</footer>
 </body>
