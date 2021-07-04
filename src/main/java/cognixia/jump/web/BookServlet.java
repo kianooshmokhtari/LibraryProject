@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import cognixia.jump.connection.ConnectionManager;
 import cognixia.jump.dao.BookDAO;
@@ -103,16 +104,17 @@ public class BookServlet extends HttpServlet {
 	
 	private void rentBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		Cookie [] cookies = request.getCookies();
+		HttpSession session = request.getSession(false);
 		
 		String id = "";
 		
-		for(int i =0 ; i < cookies.length; i++) {
+		if(session != null) {
+			Patron user = (Patron) session.getAttribute("patron");
 			
-			if(cookies[i].getName().equals("id")) {
-				id = cookies[i].getValue();
-			}
+			id = user.getId();
 		}
+		
+		
 		
 		
 		String ISBN = request.getParameter("isbn");
@@ -135,9 +137,10 @@ public class BookServlet extends HttpServlet {
 	
 	private void Logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		Cookie c = new Cookie("id" , "");
-		c.setMaxAge(0);
-		response.addCookie(c);
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			session.invalidate();
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 		
@@ -186,20 +189,26 @@ public class BookServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("pass");
 		
-		Patron test = patronDAO.getPatronByUserName(username, password);
+		Patron user = patronDAO.getPatronByUserName(username, password);
 		
-		if(test != null) {
+		if(user != null) {
 			
 			List<Book> getAllBooks = bookDao.getAllBooks();
 			
 			request.setAttribute("allBooks", getAllBooks);
 			
-			Cookie c1 = new Cookie("id", test.getId());
+			HttpSession session = request.getSession();
 			
-			c1.setMaxAge(30 * 60);
+			session.setAttribute("patron", user);
+			
+			session.setMaxInactiveInterval(300);
+			
+			//Cookie c1 = new Cookie("id", user.getId());
+			
+			//c1.setMaxAge(30 * 60);
 			
 			
-			response.addCookie(c1);
+			//response.addCookie(c1);
 			
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");

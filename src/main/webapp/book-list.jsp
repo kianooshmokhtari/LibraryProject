@@ -12,7 +12,6 @@
 		
 		<thead>
 			<tr>
-				<th>ISBN</th>
 				<th>Title</th>
 				<th>Description</th>
 				<th>Available</th>
@@ -38,9 +37,6 @@
 			<c:forEach var="book" items="${allBooks}">
 				<tr>
 					<td>
-						<c:out value="${ book.ISBN }" />
-					</td>
-					<td>
 						<c:out value="${ book.title }" />
 					</td>
 					<td>
@@ -51,6 +47,9 @@
 						<a href="rent?isbn=<c:out value='${ book.ISBN }' />">
 							<button class="btn btn-primary">Rent</button>
 						</a>
+					</c:if>
+					<c:if test = "${book.isRented() }">
+						<h4>Not Available </h4>
 					</c:if>
 					</td>
 				</tr>

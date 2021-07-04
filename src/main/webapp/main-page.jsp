@@ -6,6 +6,8 @@
 <div class="container">
 
 	<title>Main Page</title>
+	
+	
 
 	<%@include file="book-list.jsp"%>
 	
