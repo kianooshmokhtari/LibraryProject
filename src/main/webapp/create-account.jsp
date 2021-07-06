@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<hr />
-
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
-<br />
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
@@ -19,6 +16,8 @@
 	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
 	crossorigin="anonymous"></script>
 
+<%@ include file="header-logged-out.jsp" %>
+<div class="container">
 <form action="<%=request.getContextPath()%>/create-account-db" method="post">
 
 	<div class="mb-3">
@@ -41,8 +40,11 @@
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+	</div>
 <%String error = (String) request.getAttribute("AccountError"); %>
         <%if(error != null) { %>
         	<p><%= error %></p>
         	
 		<% }%>
+		
+<%@ include file="footer.jsp" %>
