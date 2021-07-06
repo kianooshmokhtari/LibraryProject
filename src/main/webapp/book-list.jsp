@@ -1,39 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<style>
+.not-allowed {
+	cursor: not-allowed;
+}
+</style>
 
 <div class="container">
 
 	<h1>Book List</h1>
-	<br>
-	<br>
-	
+	<br> <br>
+
 	<table class="table table-striped">
-		
+
 		<thead>
 			<tr>
 				<th>Title</th>
 				<th>Description</th>
+				<th>Date Added</th>
 				<th>Available</th>
 			</tr>
 		</thead>
-		
+
 		<tbody>
-		
-		<%-- <%ArrayList<Book> bk = 
-            (ArrayList<Book>)request.getAttribute("allBooks");
-        for(Book b:bk){%>
-        Arranging data in tabular form
-			<tr>
-				<td><%=b.getISBN()%></td>
-				<td><%=b.getTitle()%></td>
-				<td><%=b.getDescription()%></td>
-				<td><%=if(b.isRented()) { %>
-					<%}%>
-				</td>
-			</tr>
-			<%}%> --%>
-			
 			<c:forEach var="book" items="${allBooks}">
 				<tr>
 					<td>
@@ -54,11 +45,11 @@
 					</td>
 				</tr>
 			</c:forEach>
-		
+
 		</tbody>
-	
+
 	</table>
 
 </div>
 
-<%@ include file= "footer.jsp" %>
+<%@ include file="footer.jsp"%>

@@ -24,6 +24,7 @@
 		</thead>
 		
 		<tbody>
+
 			
 			<c:forEach var="book" items="${allBooksRented}">
 				<c:if test = "${empty book.getReturned_date() }">

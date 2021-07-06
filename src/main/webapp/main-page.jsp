@@ -10,9 +10,4 @@
 	
 
 	<%@include file="book-list.jsp"%>
-	
-<<%-- form action="<%=request.getContextPath()%>/return-book" method="post">
-	<input type="submit" class="btn btn-primary" value= "Return Book" />
-</form> --%>
-
 </div>
