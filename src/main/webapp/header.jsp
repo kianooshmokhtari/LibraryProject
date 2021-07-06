@@ -39,7 +39,7 @@ footer {
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/return-book">Return Book</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/History">History</a></li>
+						href="<%=request.getContextPath()%>/history">History</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%=request.getContextPath()%>/logout">Logout</a></li>
 				</ul>
