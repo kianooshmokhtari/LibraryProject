@@ -25,20 +25,6 @@
 		
 		<tbody>
 		
-		<%-- <%ArrayList<Book> bk = 
-            (ArrayList<Book>)request.getAttribute("allBooks");
-        for(Book b:bk){%>
-        Arranging data in tabular form
-			<tr>
-				<td><%=b.getISBN()%></td>
-				<td><%=b.getTitle()%></td>
-				<td><%=b.getDescription()%></td>
-				<td><%=if(b.isRented()) { %>
-					<%}%>
-				</td>
-			</tr>
-			<%}%> --%>
-			
 			<c:forEach var="book" items="${allBooksRented}">
 				<c:if test = "${empty book.getReturned_date() }">
 				<tr>

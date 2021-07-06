@@ -2,23 +2,6 @@
 	pageEncoding="UTF-8"%>
 <hr />
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-	crossorigin="anonymous">
-<br />
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-	crossorigin="anonymous"></script>
-
 <form action="<%=request.getContextPath()%>/login" method="post">
 
 	<div class="mb-3">
@@ -28,17 +11,15 @@
 	</div>
 	<div class="mb-3">
 		<label for="exampleInputPassword1" class="form-label">Password</label>
-		<input type="password" class="form-control" id="exampleInputPassword1" name="pass">
+		<input type="password" class="form-control" id="exampleInputPassword1"
+			name="pass">
 	</div>
 	<button type="submit" class="btn btn-primary">Submit</button>
-	
-	<%-- <%String error = (String) request.getAttribute("LoginError"); %>
-        <%if(error != null) { %>
-        	<p><%= error %></p>
-		<% }%> --%>
-		</form>
-		<br />
 
-<form action="<%=request.getContextPath()%>/create-account-page" method="post">
-	<input type="submit" class="btn btn-secondary" value= "Create Account" />
+</form>
+<br />
+
+<form action="<%=request.getContextPath()%>/create-account-page"
+	method="post">
+	<input type="submit" class="btn btn-secondary" value="Create Account" />
 </form>
