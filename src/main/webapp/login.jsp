@@ -23,7 +23,7 @@
 
 	<div class="mb-3">
 		<label for="inputUsername" class="form-label">Username </label> <input
-			type="userName" class="form-control" id="exampleInputEmail1"
+			type="userName" class="form-control" id="inputUsername"
 			aria-describedby="emailHelp" name="username">
 	</div>
 	<div class="mb-3">
