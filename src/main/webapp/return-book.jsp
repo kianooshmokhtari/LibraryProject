@@ -19,6 +19,7 @@
 				<th>Description</th>
 				<th>Checked out Date</th>
 				<th>Due Date</th>
+				<th>Return</th>
 				
 			</tr>
 		</thead>
