@@ -1,4 +1,4 @@
-<%@ include file="header.jsp"%>
+<%@ include file="header-logged-out.jsp"%>
 
 <div class="container">
 

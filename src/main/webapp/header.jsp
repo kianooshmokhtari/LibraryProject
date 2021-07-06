@@ -37,11 +37,16 @@ footer {
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/return-book">Return Book</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/history">History</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="<%=request.getContextPath()%>/logout">Logout</a></li>
+
+						href="<%= request.getContextPath() %>/return-book">Return Book</a></li>
+					
+					
+				</ul>
+				<ul class = "navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link"
+						href="<%= request.getContextPath() %>/logout">Logout</a></li>
+				
+
 				</ul>
 			</div>
 		</nav>
