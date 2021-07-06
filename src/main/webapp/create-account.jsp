@@ -43,7 +43,7 @@
 	</div>
 <%String error = (String) request.getAttribute("AccountError"); %>
         <%if(error != null) { %>
-        	<p><%= error %></p>
+        	<p classname="mb-3"><%= error %></p>
         	
 		<% }%>
 		

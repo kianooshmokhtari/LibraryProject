@@ -22,7 +22,6 @@ import cognixia.jump.model.Book;
 import cognixia.jump.model.BookCheckout;
 import cognixia.jump.model.Patron;
 
-
 /**
  * Servlet implementation class ProductServlet
  */
@@ -33,57 +32,57 @@ public class BookServlet extends HttpServlet {
 	private PatronDao patronDAO;
 	private BookDAO bookDao;
 	private BookCheckoutDao bookcheckoutDao;
-	
-	private Patron userLogedin;
-    /**
-     * Default constructor. 
-     */
-    public BookServlet() {
-        // TODO Auto-generated constructor stub
-    }
 
-    @Override
-    public void init() throws ServletException {
-    	patronDAO= new PatronDao();
-    	bookDao = new BookDAO();
-    	bookcheckoutDao = new BookCheckoutDao();
-    	
-    }
-    
+	private Patron userLogedin;
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Default constructor.
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public BookServlet() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void init() throws ServletException {
+		patronDAO = new PatronDao();
+		bookDao = new BookDAO();
+		bookcheckoutDao = new BookCheckoutDao();
+
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String action = request.getServletPath();
-		
+
 		switch (action) {
 		case "/login":
 			getUserName(request, response);
 			break;
-			
+
 		case "/create-account-page":
-			createAccount(request,response);
+			createAccount(request, response);
 			break;
 		case "/create-account-db":
-			createAccountDB(request,response);
+			createAccountDB(request, response);
 			break;
 		case "/logout":
-			Logout(request,response);
+			Logout(request, response);
 			break;
 		case "/rent":
-			rentBook(request,response);
+			rentBook(request, response);
 			break;
 		case "/return-book":
 			returnBookPage(request, response);
 			break;
 		case "/return":
-			returnBook(request,response);
+			returnBook(request, response);
 			break;
-			
-			
-			
-			
+
 //			goToProductForm(request, response);
 //			break;
 //		case "/insert":
@@ -92,18 +91,19 @@ public class BookServlet extends HttpServlet {
 		default:
 			response.sendRedirect("/");
 		}
-	
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
-	
 	@Override
 	public void destroy() {
 		try {
@@ -113,232 +113,262 @@ public class BookServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	private void returnBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	private void returnBook(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if(session != null) {
+		if (session != null) {
 			Patron user = (Patron) session.getAttribute("patron");
 			String id = user.getId();
-			
-			
+
 			String ISBN = request.getParameter("isbn");
-			
+
 			bookDao.updateReturnedBook(id, ISBN);
-			
-			ArrayList<BookCheckout> rows  = bookcheckoutDao.getBooksRentedByUser(id);
-			
+
+			ArrayList<BookCheckout> rows = bookcheckoutDao.getBooksRentedByUser(id);
+
 			request.setAttribute("allBooksRented", rows);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("return-book.jsp");
 			dispatcher.forward(request, response);
-			
-			
-			
-		}
-		else {
+
+		} else {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
-		
-		
+
 	}
-	
-	
-	private void returnBookPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
+	private void returnBookPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession(false);
-		if(session.getAttribute("patron") != null) {
+		if (session.getAttribute("patron") != null) {
 			Patron user = (Patron) session.getAttribute("patron");
 			String id = user.getId();
-			
-			ArrayList<BookCheckout> rows  = bookcheckoutDao.getBooksRentedByUser(id);
-			
+
+			ArrayList<BookCheckout> rows = bookcheckoutDao.getBooksRentedByUser(id);
+
 			request.setAttribute("allBooksRented", rows);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("return-book.jsp");
 			dispatcher.forward(request, response);
-			
+
+		} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+
 		}
-		else {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
-	
-		}
-		
+
 	}
-	
-	private void rentBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
+	private void rentBook(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession(false);
-		
+
 		String id = "";
-		
-		if(session != null) {
+
+		if (session != null) {
 			Patron user = (Patron) session.getAttribute("patron");
-			
+
 			id = user.getId();
 		}
-		
-		
-		
-		
+
 		String ISBN = request.getParameter("isbn");
-		
+
 		boolean rented = bookDao.rentABook(id, ISBN);
-		
-		if(rented) {
-			
+
+		if (rented) {
+
 			List<Book> getAllBooks = bookDao.getAllBooks();
-			
+
 			request.setAttribute("allBooks", getAllBooks);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
 		}
-		
-		
-		
+
 	}
-	
-	private void Logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
+	private void Logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		HttpSession session = request.getSession(false);
-		if(session != null) {
+		if (session != null) {
 			session.invalidate();
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
-		
+
 	}
-	
-	
-	private void createAccountDB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
+	private void createAccountDB(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String userName = request.getParameter("username");
 		String password = request.getParameter("pass");
-		
-		
-		boolean created = patronDAO.createdUserName(firstName, lastName, userName, password);
-		
-		if(created) {
-			
-			String error = "Account Sucessfully Created!";
-			
-			request.setAttribute("LoginError", error);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-			dispatcher.forward(request, response);
-			
-		}else {
-			
-			String error = "pick a different username. Username existed.";
+
+		if (firstName != null || lastName != null || userName != null || password != null) {
+//			if (firstName.trim().isEmpty() || firstName.trim().isEmpty() || firstName.trim().isEmpty()
+//					|| firstName.trim().isEmpty()) {
+//				String error = "Please Fill in all field";
+//				request.setAttribute("AccountError", error);
+//				RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+//				dispatcher.forward(request, response);
+			if (!firstName.trim().isEmpty() && !lastName.trim().isEmpty() && !userName.trim().isEmpty()
+					&& !password.trim().isEmpty()) {
+				boolean created = patronDAO.createdUserName(firstName, lastName, userName, password);
+
+				if (created) {
+
+					String error = "Account Sucessfully Created!";
+
+					request.setAttribute("LoginError", error);
+
+					RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+					dispatcher.forward(request, response);
+
+				} else {
+
+					String error = "pick a different username. Username existed.";
+					request.setAttribute("AccountError", error);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+					dispatcher.forward(request, response);
+				}
+			}
+			else {
+				
+				String error = "Please Fill in all field";
+				request.setAttribute("AccountError", error);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+				dispatcher.forward(request, response);
+				
+			}
+
+		} else {
+
+			String error = "Please Fill in all field";
 			request.setAttribute("AccountError", error);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
 			dispatcher.forward(request, response);
+
+//				boolean created = patronDAO.createdUserName(firstName, lastName, userName, password);
+//
+//				if (created) {
+//
+//					String error = "Account Sucessfully Created!";
+//
+//					request.setAttribute("LoginError", error);
+//
+//					RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+//					dispatcher.forward(request, response);
+//
+//				} else {
+//
+//					String error = "pick a different username. Username existed.";
+//					request.setAttribute("AccountError", error);
+//					RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
+//					dispatcher.forward(request, response);
+//				}
+
 		}
-		
-		
+
 	}
-	
-	private void createAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+
+	private void createAccount(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("create-account.jsp");
 		dispatcher.forward(request, response);
-		
+
 	}
-	
+
 //
-	private void getUserName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	private void getUserName(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session1 = request.getSession(false);
-		
-		if(session1.getAttribute("patron") != null) {
-			
+
+		if (session1.getAttribute("patron") != null) {
+
 			String id;
-			
+
 			Patron user = (Patron) session1.getAttribute("patron");
-			
+
 			id = user.getId();
-			
+
 			List<Book> getAllBooks = bookDao.getAllBooks();
-			
+
 			request.setAttribute("allBooks", getAllBooks);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
 			dispatcher.forward(request, response);
-			
-			
-			
-			
-			
-			
-		}else {
-		
-		
-		
-		
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("pass");
-		
-		Patron user = patronDAO.getPatronByUserName(username, password);
-		
-		if(user != null) {
-			
-			List<Book> getAllBooks = bookDao.getAllBooks();
-			
-			request.setAttribute("allBooks", getAllBooks);
-			
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("patron", user);
-			
-			session.setMaxInactiveInterval(300);
-			
-			//Cookie c1 = new Cookie("id", user.getId());
-			
-			//c1.setMaxAge(30 * 60);
-			
-			
-			//response.addCookie(c1);
-			
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
-			dispatcher.forward(request, response);
-		}else {
-			
-			String error = "Wrong username or password entered";
-			
-			request.setAttribute("LoginError", error);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-			dispatcher.forward(request, response);
+
+		} else {
+
+			String username = request.getParameter("username");
+			String password = request.getParameter("pass");
+
+			if (username == null || password == null) {
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+
+			} else {
+
+				Patron user = patronDAO.getPatronByUserName(username, password);
+
+				if (user != null) {
+
+					List<Book> getAllBooks = bookDao.getAllBooks();
+
+					request.setAttribute("allBooks", getAllBooks);
+
+					HttpSession session = request.getSession();
+
+					session.setAttribute("patron", user);
+
+					session.setMaxInactiveInterval(300);
+
+					// Cookie c1 = new Cookie("id", user.getId());
+
+					// c1.setMaxAge(30 * 60);
+
+					// response.addCookie(c1);
+
+					RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
+					dispatcher.forward(request, response);
+				} else {
+
+					String error = "Wrong username or password entered";
+
+					request.setAttribute("LoginError", error);
+
+					RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+					dispatcher.forward(request, response);
+				}
+
 			}
-		
-		
 		}
-		
-		//response.sendRedirect(request.getContextPath());
+
+		// response.sendRedirect(request.getContextPath());
 	}
-	
-	private void getAllBooks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	private void getAllBooks(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		List<Book> allbooks = bookDao.getAllBooks();
-		
-		Cookie [] cookies = request.getCookies();
-		
+
+		Cookie[] cookies = request.getCookies();
+
 		String id = cookies[0].getValue();
-		
-		
+
 		request.setAttribute("id", id);
 		request.setAttribute("allBooks", allbooks);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("book-list.jsp");
 		dispatcher.forward(request, response);
-		
-		
-		
+
 	}
-	
+
 }
