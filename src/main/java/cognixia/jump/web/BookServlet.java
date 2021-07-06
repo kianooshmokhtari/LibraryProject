@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cognixia.jump.connection.ConnectionManager;
+import cognixia.jump.dao.BookCheckoutDao;
 import cognixia.jump.dao.BookDAO;
 import cognixia.jump.dao.PatronDao;
 import cognixia.jump.model.Book;
+import cognixia.jump.model.BookCheckout;
 import cognixia.jump.model.Patron;
 
 
@@ -30,6 +32,7 @@ public class BookServlet extends HttpServlet {
 
 	private PatronDao patronDAO;
 	private BookDAO bookDao;
+	private BookCheckoutDao bookcheckoutDao;
 	
 	private Patron userLogedin;
     /**
@@ -43,6 +46,8 @@ public class BookServlet extends HttpServlet {
     public void init() throws ServletException {
     	patronDAO= new PatronDao();
     	bookDao = new BookDAO();
+    	bookcheckoutDao = new BookCheckoutDao();
+    	
     }
     
 	/**
@@ -69,6 +74,13 @@ public class BookServlet extends HttpServlet {
 		case "/rent":
 			rentBook(request,response);
 			break;
+		case "/return-book":
+			returnBookPage(request, response);
+			break;
+		case "/return":
+			returnBook(request,response);
+			break;
+			
 			
 			
 			
@@ -100,6 +112,60 @@ public class BookServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	private void returnBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			Patron user = (Patron) session.getAttribute("patron");
+			String id = user.getId();
+			
+			
+			String ISBN = request.getParameter("isbn");
+			
+			bookDao.updateReturnedBook(id, ISBN);
+			
+			ArrayList<BookCheckout> rows  = bookcheckoutDao.getBooksRentedByUser(id);
+			
+			request.setAttribute("allBooksRented", rows);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("return-book.jsp");
+			dispatcher.forward(request, response);
+			
+			
+			
+		}
+		else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		
+	}
+	
+	
+	private void returnBookPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			Patron user = (Patron) session.getAttribute("patron");
+			String id = user.getId();
+			
+			ArrayList<BookCheckout> rows  = bookcheckoutDao.getBooksRentedByUser(id);
+			
+			request.setAttribute("allBooksRented", rows);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("return-book.jsp");
+			dispatcher.forward(request, response);
+			
+		}
+		else {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
+	
+		}
+		
 	}
 	
 	private void rentBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -186,6 +252,34 @@ public class BookServlet extends HttpServlet {
 	
 //
 	private void getUserName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		HttpSession session1 = request.getSession(false);
+		
+		if(session1.getAttribute("patron") != null) {
+			
+			String id;
+			
+			Patron user = (Patron) session1.getAttribute("patron");
+			
+			id = user.getId();
+			
+			List<Book> getAllBooks = bookDao.getAllBooks();
+			
+			request.setAttribute("allBooks", getAllBooks);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("main-page.jsp");
+			dispatcher.forward(request, response);
+			
+			
+			
+			
+			
+			
+		}else {
+		
+		
+		
+		
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("pass");
 		
@@ -224,7 +318,7 @@ public class BookServlet extends HttpServlet {
 			}
 		
 		
-		
+		}
 		
 		//response.sendRedirect(request.getContextPath());
 	}

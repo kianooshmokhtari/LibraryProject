@@ -26,7 +26,7 @@ footer {
 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="<%= request.getContextPath() %>/">&#x1F4DA Library
+			<a class="navbar-brand" href="<%= request.getContextPath() %>/login">&#x1F4DA Library
 				Catalog</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
@@ -41,9 +41,12 @@ footer {
 						href="<%= request.getContextPath() %>/return-book">Return Book</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<%= request.getContextPath() %>/History">History</a></li>
-					<li class="nav-item"><a class="nav-link"
+					
+				</ul>
+				<ul class = "navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link"
 						href="<%= request.getContextPath() %>/logout">Logout</a></li>
-
+				
 				</ul>
 
 			</div>
