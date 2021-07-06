@@ -40,11 +40,11 @@
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-	</div>
 <%String error = (String) request.getAttribute("AccountError"); %>
         <%if(error != null) { %>
         	<p classname="mb-3"><%= error %></p>
         	
 		<% }%>
 		
+	</div>
 <%@ include file="footer.jsp" %>
