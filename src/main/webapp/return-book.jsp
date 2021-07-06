@@ -38,7 +38,7 @@
 					<td>
 						<c:out value="${ book.getCheckout_date() }" />
 					</td>
-					<td class="bg-danger text-white">
+					<td class="bg-danger text-white text-nowrap">
 						<c:out value="${ book.getDue_date() }" />
 					</td>
 					<td>

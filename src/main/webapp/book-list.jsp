@@ -4,9 +4,9 @@
 
 <div class="container">
 
+	<br>
+	<br>
 	<h1>Book List</h1>
-	<br>
-	<br>
 	
 	<table class="table table-striped">
 		
