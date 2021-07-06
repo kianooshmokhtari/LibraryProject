@@ -148,7 +148,7 @@ public class BookServlet extends HttpServlet {
 	private void returnBookPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		HttpSession session = request.getSession(false);
-		if(session != null) {
+		if(session.getAttribute("patron") != null) {
 			Patron user = (Patron) session.getAttribute("patron");
 			String id = user.getId();
 			
