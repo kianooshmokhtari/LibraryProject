@@ -17,7 +17,6 @@
 
 		<thead>
 			<tr>
-				<th>ISBN</th>
 				<th>Title</th>
 				<th>Description</th>
 				<th>Date Added</th>
@@ -28,22 +27,22 @@
 		<tbody>
 			<c:forEach var="book" items="${allBooks}">
 				<tr>
-					<td><c:out value="${ book.ISBN }" /></td>
-					<td><c:out value="${ book.title }" /></td>
-					<td><c:out value="${ book.description }" /></td>
-					<td><c:out value="${ book.added_To_Library }" /></td>
-					<td><c:choose>
-							<c:when test="${ not book.isRented() }">
-								<a href="rent?isbn=<c:out value='${ book.ISBN }' />">
-									<button class="btn btn-primary">Rent</button>
-								</a>
-								<br />
-							</c:when>
-							<c:otherwise>
-								<button class="btn btn-primary not-allowed" disabled>Rent</button>
-								<br />
-							</c:otherwise>
-						</c:choose></td>
+					<td>
+						<c:out value="${ book.title }" />
+					</td>
+					<td>
+						<c:out value="${ book.description }" />
+					</td>
+					<td>
+					<c:if test="${ not book.isRented() }">
+						<a href="rent?isbn=<c:out value='${ book.ISBN }' />">
+							<button class="btn btn-primary">Rent</button>
+						</a>
+					</c:if>
+					<c:if test = "${book.isRented() }">
+						<h4>Not Available </h4>
+					</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 
